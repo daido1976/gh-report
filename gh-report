@@ -1,35 +1,9 @@
-#!/usr/bin/env bash
+#!/bin/bash
 set -e
 
-echo "Hello gh-report!"
+# The hostname must be specified to fetch the oauth token
+# See. https://github.com/cli/cli/issues/4060
+export GITHUB_API_TOKEN=`gh config get oauth_token -h github.com`
 
-# Snippets to help get started:
-
-# Determine if an executable is in the PATH
-# if ! type -p ruby >/dev/null; then
-#   echo "Ruby not found on the system" >&2
-#   exit 1
-# fi
-
-# Pass arguments through to another command
-# gh issue list "$@" -R cli/cli
-
-# Using the gh api command to retrieve and format information
-# QUERY='
-#   query($endCursor: String) {
-#     viewer {
-#       repositories(first: 100, after: $endCursor) {
-#         nodes {
-#           nameWithOwner
-#           stargazerCount
-#         }
-#       }
-#     }
-#   }
-# '
-# TEMPLATE='
-#   {{- range $repo := .data.viewer.repositories.nodes -}}
-#     {{- printf "name: %s - stargazers: %v\n" $repo.nameWithOwner $repo.stargazerCount -}}
-#   {{- end -}}
-# '
-# exec gh api graphql -f query="${QUERY}" --paginate --template="${TEMPLATE}"
+# for development
+exec "target/debug/gh-report" "$@"
