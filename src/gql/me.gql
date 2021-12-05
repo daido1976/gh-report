@@ -1,0 +1,35 @@
+query Me($from_date_time: DateTime!, $to_date_time: DateTime!) {
+  viewer {
+    login
+    contributionsCollection(from: $from_date_time, to: $to_date_time) {
+      issueContributions(last: 100, orderBy: { direction: ASC }) {
+        edges {
+          node {
+            issue {
+              title
+              url
+              state
+              repository {
+                nameWithOwner
+              }
+            }
+          }
+        }
+      }
+      pullRequestContributions(last: 100, orderBy: { direction: ASC }) {
+        edges {
+          node {
+            pullRequest {
+              title
+              url
+              state
+              repository {
+                nameWithOwner
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

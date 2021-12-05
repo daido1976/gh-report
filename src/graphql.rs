@@ -1,15 +1,18 @@
-use graphql_client::{GraphQLQuery, Response};
-use std::error::Error;
+use graphql_client::GraphQLQuery;
+
+#[allow(clippy::upper_case_acronyms)]
+type URI = String;
+type DateTime = chrono::DateTime<chrono::Utc>;
 
 #[derive(GraphQLQuery)]
 #[graphql(
     schema_path = "src/gql/schema.docs.graphql",
-    query_path = "src/gql/myquery.gql",
+    query_path = "src/gql/me.gql",
     response_derives = "Debug"
 )]
-pub struct MyQuery;
+pub struct Me;
 
-pub async fn exec(github_api_token: String) {
+pub async fn exec(github_api_token: String) -> me::MeViewerContributionsCollection {
     println!("Hello, graphql!");
     let client = reqwest::Client::builder()
         .user_agent("graphql-rust/0.10.0")
@@ -24,9 +27,12 @@ pub async fn exec(github_api_token: String) {
         .build()
         .unwrap();
 
-    let variables = my_query::Variables {};
+    let variables = me::Variables {
+        from_date_time: chrono::Utc::now() - chrono::Duration::days(10),
+        to_date_time: chrono::Utc::now(),
+    };
 
-    let response_body = graphql_client::reqwest::post_graphql::<MyQuery, _>(
+    let response_body = graphql_client::reqwest::post_graphql::<Me, _>(
         &client,
         "https://api.github.com/graphql",
         variables,
@@ -34,7 +40,5 @@ pub async fn exec(github_api_token: String) {
     .await
     .unwrap();
 
-    println!("{:?}", response_body);
-    let issues = response_body.data.unwrap().repository.unwrap().issues;
-    println!("\n issues!!! {:?}", issues);
+    response_body.data.unwrap().viewer.contributions_collection
 }
