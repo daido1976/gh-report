@@ -1,7 +1,10 @@
 use graphql_client::GraphQLQuery;
 
+// Not used in GraphQLQuery
+pub type NameWithOwner = String;
+
 #[allow(clippy::upper_case_acronyms)]
-type URI = String;
+pub type URI = String;
 type DateTime = chrono::DateTime<chrono::Utc>;
 
 #[derive(GraphQLQuery)]
@@ -13,7 +16,6 @@ type DateTime = chrono::DateTime<chrono::Utc>;
 pub struct Me;
 
 pub async fn exec(github_api_token: String) -> me::MeViewerContributionsCollection {
-    println!("Hello, graphql!");
     let client = reqwest::Client::builder()
         .user_agent("graphql-rust/0.10.0")
         .default_headers(
@@ -27,6 +29,7 @@ pub async fn exec(github_api_token: String) -> me::MeViewerContributionsCollecti
         .build()
         .unwrap();
 
+    // TODO: Pass variables from command line arguments
     let variables = me::Variables {
         from_date_time: chrono::Utc::now() - chrono::Duration::days(10),
         to_date_time: chrono::Utc::now(),
