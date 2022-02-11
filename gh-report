@@ -1,9 +1,5 @@
 #!/bin/bash
 set -e
 
-# The hostname must be specified to fetch the oauth token
-# See. https://github.com/cli/cli/issues/4060
-export GITHUB_API_TOKEN=`gh config get oauth_token -h github.com`
-
 # for development
 exec "target/debug/gh-report" "$@"

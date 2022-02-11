@@ -1,9 +1,9 @@
+mod gh;
 mod graphql;
 use graphql::{NameWithOwner, URI};
 
 use crate::graphql::me::MeViewerContributionsCollection;
 use std::collections::HashMap;
-use std::env;
 
 type MyContributions = HashMap<NameWithOwner, Vec<IssueOrPr>>;
 #[derive(Debug)]
@@ -15,7 +15,7 @@ struct IssueOrPr {
 
 #[tokio::main]
 async fn main() {
-    let github_api_token = env::var("GITHUB_API_TOKEN").expect("Missing GITHUB_API_TOKEN env var");
+    let github_api_token = gh::fetch_token();
     let contributions_collection = graphql::exec(github_api_token).await;
     let my_contributions = combine(contributions_collection);
     puts(my_contributions);
