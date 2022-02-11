@@ -2,6 +2,12 @@
 
 See. https://github.com/daido1976/github-report
 
+## Installation
+
+```sh
+$ gh extension install daido1976/gh-report
+```
+
 ## Usage
 
 ```sh
