@@ -15,3 +15,10 @@ $ gh extension install daido1976/gh-report
 $ gh auth refresh --scopes read:user
 $ gh report
 ```
+
+## Release
+
+```sh
+$ git tag <version(e.g.`v0.1`)>
+$ git push --tag
+```
