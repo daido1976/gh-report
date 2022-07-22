@@ -1,9 +1,10 @@
 use std::collections::HashMap;
 
 use crate::graphql::{me::MeViewerContributionsCollection, NameWithOwner, URI};
+use serde::Deserialize;
 
 pub type MyContributions = HashMap<NameWithOwner, Vec<IssueOrPr>>;
-#[derive(Debug)]
+#[derive(Debug, Deserialize)]
 pub struct IssueOrPr {
     pub title: String,
     pub url: URI,
