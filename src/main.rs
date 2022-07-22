@@ -21,27 +21,6 @@ async fn main() {
     puts(my_contributions);
 }
 
-impl std::fmt::Display for graphql::me::IssueState {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match self {
-            graphql::me::IssueState::OPEN => write!(f, "open"),
-            graphql::me::IssueState::CLOSED => write!(f, "closed"),
-            _ => write!(f, "unknown"),
-        }
-    }
-}
-
-impl std::fmt::Display for graphql::me::PullRequestState {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match self {
-            graphql::me::PullRequestState::OPEN => write!(f, "open"),
-            graphql::me::PullRequestState::CLOSED => write!(f, "closed"),
-            graphql::me::PullRequestState::MERGED => write!(f, "merged"),
-            _ => write!(f, "unknown"),
-        }
-    }
-}
-
 fn combine(contributions_collection: MeViewerContributionsCollection) -> MyContributions {
     let issue_contributions = contributions_collection.issue_contributions.edges.unwrap();
     let pr_contributions = contributions_collection

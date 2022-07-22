@@ -45,3 +45,24 @@ pub async fn exec(github_api_token: String) -> me::MeViewerContributionsCollecti
 
     response_body.data.unwrap().viewer.contributions_collection
 }
+
+impl std::fmt::Display for me::IssueState {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            me::IssueState::OPEN => write!(f, "open"),
+            me::IssueState::CLOSED => write!(f, "closed"),
+            _ => write!(f, "unknown"),
+        }
+    }
+}
+
+impl std::fmt::Display for me::PullRequestState {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            me::PullRequestState::OPEN => write!(f, "open"),
+            me::PullRequestState::CLOSED => write!(f, "closed"),
+            me::PullRequestState::MERGED => write!(f, "merged"),
+            _ => write!(f, "unknown"),
+        }
+    }
+}
