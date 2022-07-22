@@ -53,41 +53,6 @@ mod test {
         let cc =
             serde_json::from_str(include_str!("fixtures/contributionsCollection.json")).unwrap();
         let actual = combine(cc);
-        assert_debug_snapshot!(
-            actual,
-            @r###"
-        {
-            "rust-lang/rust": [
-                IssueOrPr {
-                    title: "Cannot build on Fedora: wrong CPUTYPE?",
-                    url: "https://github.com/rust-lang/rust/issues/1218",
-                    state: "open",
-                },
-                IssueOrPr {
-                    title: "rustc: Fix position of diagnostic highlight lines",
-                    url: "https://github.com/rust-lang/rust/issues/1219",
-                    state: "closed",
-                },
-                IssueOrPr {
-                    title: "Add float support to #fmt.",
-                    url: "https://github.com/rust-lang/rust/pull/1168",
-                    state: "merged",
-                },
-                IssueOrPr {
-                    title: "Prohibit in-scope consts from use as variable names in binders, like nullary tags",
-                    url: "https://github.com/rust-lang/rust/pull/1193",
-                    state: "merged",
-                },
-            ],
-            "daido1976/terakoya": [
-                IssueOrPr {
-                    title: "From now to Vercel",
-                    url: "https://github.com/daido1976/terakoya/pull/52",
-                    state: "merged",
-                },
-            ],
-        }
-        "###
-        );
+        assert_debug_snapshot!(actual);
     }
 }
