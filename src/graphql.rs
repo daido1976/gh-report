@@ -11,7 +11,7 @@ type DateTime = chrono::DateTime<chrono::Utc>;
 #[graphql(
     schema_path = "src/gql/schema.docs.graphql",
     query_path = "src/gql/me.gql",
-    response_derives = "Debug"
+    response_derives = "Serialize,Debug,Clone"
 )]
 pub struct Me;
 

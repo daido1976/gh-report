@@ -1,0 +1,70 @@
+{
+  "issueContributions": {
+    "edges": [
+      {
+        "node": {
+          "issue": {
+            "title": "Cannot build on Fedora: wrong CPUTYPE?",
+            "url": "https://github.com/rust-lang/rust/issues/1218",
+            "state": "OPEN",
+            "repository": {
+              "nameWithOwner": "rust-lang/rust"
+            }
+          }
+        }
+      },
+      {
+        "node": {
+          "issue": {
+            "title": "rustc: Fix position of diagnostic highlight lines",
+            "url": "https://github.com/rust-lang/rust/issues/1219",
+            "state": "CLOSED",
+            "repository": {
+              "nameWithOwner": "rust-lang/rust"
+            }
+          }
+        }
+      }
+    ]
+  },
+  "pullRequestContributions": {
+    "edges": [
+      {
+        "node": {
+          "pullRequest": {
+            "title": "Add float support to #fmt.",
+            "url": "https://github.com/rust-lang/rust/pull/1168",
+            "state": "MERGED",
+            "repository": {
+              "nameWithOwner": "rust-lang/rust"
+            }
+          }
+        }
+      },
+      {
+        "node": {
+          "pullRequest": {
+            "title": "From now to Vercel",
+            "url": "https://github.com/daido1976/terakoya/pull/52",
+            "state": "MERGED",
+            "repository": {
+              "nameWithOwner": "daido1976/terakoya"
+            }
+          }
+        }
+      },
+      {
+        "node": {
+          "pullRequest": {
+            "title": "Prohibit in-scope consts from use as variable names in binders, like nullary tags",
+            "url": "https://github.com/rust-lang/rust/pull/1193",
+            "state": "MERGED",
+            "repository": {
+              "nameWithOwner": "rust-lang/rust"
+            }
+          }
+        }
+      }
+    ]
+  }
+}
