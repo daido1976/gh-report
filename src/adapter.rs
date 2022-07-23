@@ -1,7 +1,6 @@
-use std::collections::HashMap;
-
 use crate::graphql::{me::MeViewerContributionsCollection, NameWithOwner, URI};
 use serde::Deserialize;
+use std::collections::HashMap;
 
 pub type MyContributions = HashMap<NameWithOwner, Vec<IssueOrPr>>;
 #[derive(Debug, Deserialize)]

@@ -1,3 +1,4 @@
+use anyhow::Result;
 use graphql_client::GraphQLQuery;
 
 // Not used in GraphQLQuery
@@ -15,19 +16,17 @@ type DateTime = chrono::DateTime<chrono::Utc>;
 )]
 pub struct Me;
 
-pub async fn exec(github_api_token: String) -> me::MeViewerContributionsCollection {
+pub async fn exec(github_api_token: String) -> Result<me::MeViewerContributionsCollection> {
     let client = reqwest::Client::builder()
         .user_agent("graphql-rust/0.10.0")
         .default_headers(
             std::iter::once((
                 reqwest::header::AUTHORIZATION,
-                reqwest::header::HeaderValue::from_str(&format!("Bearer {}", github_api_token))
-                    .unwrap(),
+                reqwest::header::HeaderValue::from_str(&format!("Bearer {}", github_api_token))?,
             ))
             .collect(),
         )
-        .build()
-        .unwrap();
+        .build()?;
 
     // TODO: Pass variables from command line arguments
     let variables = me::Variables {
@@ -40,10 +39,9 @@ pub async fn exec(github_api_token: String) -> me::MeViewerContributionsCollecti
         "https://api.github.com/graphql",
         variables,
     )
-    .await
-    .unwrap();
+    .await?;
 
-    response_body.data.unwrap().viewer.contributions_collection
+    Ok(response_body.data.unwrap().viewer.contributions_collection)
 }
 
 impl std::fmt::Display for me::IssueState {
