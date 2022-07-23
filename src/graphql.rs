@@ -41,7 +41,10 @@ pub async fn exec(github_api_token: String) -> Result<me::MeViewerContributionsC
     )
     .await?;
 
-    Ok(response_body.data.unwrap().viewer.contributions_collection)
+    let data = response_body
+        .data
+        .expect("No data means you must have received an error.");
+    Ok(data.viewer.contributions_collection)
 }
 
 impl std::fmt::Display for me::IssueState {
