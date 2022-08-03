@@ -11,40 +11,43 @@ pub struct IssueOrPr {
 }
 
 pub fn combine(contributions_collection: MeViewerContributionsCollection) -> MyContributions {
-    let mut result: MyContributions = HashMap::new();
-    if let Some(issue_contributions) = contributions_collection.issue_contributions.edges {
-        for contribution in issue_contributions.into_iter().flatten() {
-            let issue = match contribution.node {
-                Some(x) => x.issue,
-                None => continue,
-            };
+    let my_contributions: MyContributions = contributions_collection
+        .issue_contributions
+        .edges
+        .unwrap_or_default()
+        .into_iter()
+        .flatten()
+        .filter_map(|c| c.node)
+        .fold(HashMap::new(), |mut acc, node| {
+            let issue = node.issue;
             let owner: NameWithOwner = issue.repository.name_with_owner;
             let issue = IssueOrPr {
                 title: issue.title,
                 url: issue.url,
                 state: issue.state.to_string(),
             };
-            result.entry(owner).or_insert_with(Vec::new).push(issue);
-        }
-    }
+            acc.entry(owner).or_insert_with(Vec::new).push(issue);
+            acc
+        });
 
-    if let Some(pr_contributions) = contributions_collection.pull_request_contributions.edges {
-        for contribution in pr_contributions.into_iter().flatten() {
-            let pr = match contribution.node {
-                Some(x) => x.pull_request,
-                None => continue,
-            };
+    contributions_collection
+        .pull_request_contributions
+        .edges
+        .unwrap_or_default()
+        .into_iter()
+        .flatten()
+        .filter_map(|c| c.node)
+        .fold(my_contributions, |mut acc, node| {
+            let pr = node.pull_request;
             let owner: NameWithOwner = pr.repository.name_with_owner;
             let pr = IssueOrPr {
                 title: pr.title,
                 url: pr.url,
                 state: pr.state.to_string(),
             };
-            result.entry(owner).or_insert_with(Vec::new).push(pr);
-        }
-    }
-
-    result
+            acc.entry(owner).or_insert_with(Vec::new).push(pr);
+            acc
+        })
 }
 
 #[cfg(test)]
