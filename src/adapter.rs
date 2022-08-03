@@ -1,8 +1,9 @@
 use crate::graphql::{me::MeViewerContributionsCollection, NameWithOwner, URI};
 use serde::Deserialize;
-use std::collections::HashMap;
+use std::collections::BTreeMap;
 
-pub type MyContributions = HashMap<NameWithOwner, Vec<IssueOrPr>>;
+// NOTE: Use BTreeMap because using HashMap does not guarantee the order of entries and the test will fail.
+pub type MyContributions = BTreeMap<NameWithOwner, Vec<IssueOrPr>>;
 #[derive(Debug, Deserialize)]
 pub struct IssueOrPr {
     pub title: String,
@@ -18,7 +19,7 @@ pub fn combine(contributions_collection: MeViewerContributionsCollection) -> MyC
         .into_iter()
         .flatten()
         .filter_map(|c| c.node)
-        .fold(HashMap::new(), |mut acc, node| {
+        .fold(BTreeMap::new(), |mut acc, node| {
             let issue = node.issue;
             let owner: NameWithOwner = issue.repository.name_with_owner;
             let issue = IssueOrPr {
@@ -64,6 +65,13 @@ mod test {
             actual,
             @r###"
         {
+            "daido1976/terakoya": [
+                IssueOrPr {
+                    title: "From now to Vercel",
+                    url: "https://github.com/daido1976/terakoya/pull/52",
+                    state: "merged",
+                },
+            ],
             "rust-lang/rust": [
                 IssueOrPr {
                     title: "Cannot build on Fedora: wrong CPUTYPE?",
@@ -83,13 +91,6 @@ mod test {
                 IssueOrPr {
                     title: "Prohibit in-scope consts from use as variable names in binders, like nullary tags",
                     url: "https://github.com/rust-lang/rust/pull/1193",
-                    state: "merged",
-                },
-            ],
-            "daido1976/terakoya": [
-                IssueOrPr {
-                    title: "From now to Vercel",
-                    url: "https://github.com/daido1976/terakoya/pull/52",
                     state: "merged",
                 },
             ],

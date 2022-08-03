@@ -29,7 +29,7 @@ mod test {
         // See. https://github.com/mitsuhiko/insta/issues/117
         assert_debug_snapshot!(
             actual,
-            @r###""\n### rust-lang/rust\n\n- [Cannot build on Fedora: wrong CPUTYPE?](https://github.com/rust-lang/rust/issues/1218) **open!**\n- [rustc: Fix position of diagnostic highlight lines](https://github.com/rust-lang/rust/issues/1219) **closed!**\n- [Add float support to #fmt.](https://github.com/rust-lang/rust/pull/1168) **merged!**\n- [Prohibit in-scope consts from use as variable names in binders, like nullary tags](https://github.com/rust-lang/rust/pull/1193) **merged!**\n\n### daido1976/terakoya\n\n- [From now to Vercel](https://github.com/daido1976/terakoya/pull/52) **merged!**\n""###
+            @r###""\n### daido1976/terakoya\n\n- [From now to Vercel](https://github.com/daido1976/terakoya/pull/52) **merged!**\n\n### rust-lang/rust\n\n- [Cannot build on Fedora: wrong CPUTYPE?](https://github.com/rust-lang/rust/issues/1218) **open!**\n- [rustc: Fix position of diagnostic highlight lines](https://github.com/rust-lang/rust/issues/1219) **closed!**\n- [Add float support to #fmt.](https://github.com/rust-lang/rust/pull/1168) **merged!**\n- [Prohibit in-scope consts from use as variable names in binders, like nullary tags](https://github.com/rust-lang/rust/pull/1193) **merged!**\n""###
         );
     }
 }
