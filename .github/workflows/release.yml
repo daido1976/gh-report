@@ -20,10 +20,6 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
-      - run: bash ./scripts/build.sh
-      - name: Upload release artifact
-        uses: softprops/action-gh-release@v1
+      - uses: cli/gh-extension-precompile@v1
         with:
-          draft: false
-          prerelease: false
-          files: dist/darwin-amd64
+          build_script_override: "./scripts/build.sh"
