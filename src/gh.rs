@@ -1,10 +1,9 @@
 use std::process::{Command, Output};
 
-// NOTE: The hostname must be specified to fetch the oauth token.
-// See. https://github.com/cli/cli/issues/4060
-// $ gh config get oauth_token -h github.com
+// See. https://github.com/daido1976/gh-default-branch/issues/7
+// $ gh auth token
 pub fn fetch_token() -> String {
-    let output = gh(&["config", "get", "oauth_token", "-h", "github.com"]);
+    let output = gh(&["auth", "token"]);
     String::from_utf8_lossy(&output.stdout).trim().to_string()
 }
 
